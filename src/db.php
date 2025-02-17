@@ -1,19 +1,21 @@
 <?php
 // Connexion à la base de données
-$servername = "db";
-$username = "alex";
-$password = "azerty";
-$database = "yt";
+$servername = getenv('DB_HOST'); // Valeur par défaut : 'db'
+$username = getenv('MYSQL_USER');
+$password = getenv('MYSQL_PASSWORD');
+$database = getenv('MYSQL_DATABASE');
 
 function connectDB() {
-    $conn = new mysqli($GLOBALS['servername'], $GLOBALS['username'], $GLOBALS['password'], $GLOBALS['database']);
+    global $servername, $username, $password, $database;
+
+    $conn = new mysqli($servername, $username, $password, $database);
 
     if ($conn->connect_error) {
         die("Échec de la connexion : " . $conn->connect_error);
     }
 
     return $conn;
-}
+} 
 
 // Fonction pour ajouter une vidéo
 function addVideo($title, $video_id, $comment) {
